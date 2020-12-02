@@ -23,7 +23,7 @@
 					id="dfrm" name="dfrm" style="margin-top: 20px; font-size: 14pt; display: none;"
 					class="w3-col w3-card-4 w3-padding">
 				<label for="pw" class="w3-col m3 w3-text-grey ft18px w3-padding">비밀번호 : </label>
-				<input type="hidden" name="no" id="no" value="${DATA.mno}">
+				<input type="hidden" name="mno" id="mno" value="${DATA.mno}">
 				<input type="password" id="pw" name="pw" 
 						class="w3-col m7 w3-input w3-border">
 				<div class="w3-col m2 pdh10">

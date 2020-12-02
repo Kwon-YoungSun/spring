@@ -37,4 +37,7 @@ $(document).ready(function(){
 	$('#searchbtn').click(function(){
 		$(location).attr('href', '/cls/search/search.cls');
 	});
+	$('#membListbtn').click(function(){
+		$(location).attr('href', '/cls/member/nameList.cls');
+	});
 });

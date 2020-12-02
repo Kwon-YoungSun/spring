@@ -6,11 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.increpas.cls.dao.MemberDao;
 import com.increpas.cls.vo.MemberVO;
+import java.util.*;
 
 @Controller
 @RequestMapping("/member")
@@ -29,7 +31,7 @@ public class Member {
 	public ModelAndView loginProc(ModelAndView mv, RedirectView rd, HttpSession session, MemberVO mVO) {
 		
 		int cnt = mDao.loginCnt(mVO);
-		System.out.println("### cont login cnt : " + cnt);
+//		System.out.println("### cont login cnt : " + cnt);
 		if(cnt == 0) {
 			rd.setUrl("/cls/member/login.cls");
 		} else {
@@ -42,10 +44,16 @@ public class Member {
 	
 	@RequestMapping("/logout.cls")
 	public ModelAndView logoutProc(HttpSession session, RedirectView rd, ModelAndView mv) {
-		session.removeAttribute("SID");
+		String sid = (String) session.getAttribute("SID");
+		if(sid == null) {
+			rd.setUrl("/cls/main.cls");
+			mv.setView(rd);
+		} else {
+			session.removeAttribute("SID");
+			rd.setUrl("/cls/member/login.cls");
+			mv.setView(rd);
+		}
 		
-		rd.setUrl("/cls/main.cls");
-		mv.setView(rd);
 		return mv;
 	}
 	
@@ -89,4 +97,88 @@ public class Member {
 		}
 		return mv;
 	}
+	
+	@RequestMapping("/memberInfo.cls")
+	public ModelAndView getInfo(ModelAndView mv, HttpSession session, RedirectView rv) {
+		String sid = (String) session.getAttribute("SID");
+		if(sid == null) {
+			rv.setUrl("/cls/member/login.cls");
+			mv.setView(rv);
+		} else {
+			mv.setViewName("member/memberInfo");
+			MemberVO mVO = mDao.getInfo(sid);
+			
+			mv.addObject("DATA", mVO);
+		}
+		
+		return mv;
+	}
+	
+	@RequestMapping(path="/memberDel.cls", method=RequestMethod.POST)
+	public ModelAndView memberDel(ModelAndView mv, HttpSession session, MemberVO mVO) {
+		int cnt = mDao.outMember(mVO);
+//		System.out.println("########## cnt : " + cnt);
+		if(cnt == 1) {
+			// 이 경우는 회원 탈퇴에 성공한 경우이므로
+			// 세션에 기록된 데이터 지우고
+			session.removeAttribute("SID");
+			// 메인페이지로 돌려보낸다.
+			mv.setViewName("redirect:/main.cls");
+		} else {
+			// 처리에 실패한 경우이므로 회원상세정보페이지로 다시 보낸다.
+			mv.setViewName("redirect:/member/memberInfo.cls");
+		}
+		
+		return mv;
+	}
+	
+	@RequestMapping("/nameList.cls")
+	public ModelAndView getList(ModelAndView mv, HttpSession session) {
+		String sid = (String) session.getAttribute("SID");
+		
+		if(sid == null) {
+			// 로그인을 하지 않은 경우
+			mv.setViewName("redirect:/member/login.cls");
+		} else {
+			List<MemberVO> list = mDao.getNameList();
+			// 데이터를 뷰에 전달하는 방법
+			mv.addObject("LIST", list);
+			mv.setViewName("member/memberList");
+		}
+		return mv;
+	}
+	
+	// 이름버튼 클릭하면 회원정보 보기(포워드 방식)
+	@RequestMapping(path="/memberInfo2.cls", method=RequestMethod.POST)
+	public ModelAndView getInfoByName(ModelAndView mv, String mno, HttpSession session) {
+//		System.out.println(mno);
+		String sid = (String) session.getAttribute("SID");
+		
+		if(sid == null) {
+			// 로그인을 하지 않은 경우
+			mv.setViewName("redirect:/member/login.cls");
+		} else if(mno == null) {
+			// 입력된 회원번호가 없을 경우
+			mv.setViewName("redirect:/main.cls");
+		} else {
+			int no = Integer.parseInt(mno);
+			MemberVO mVO = mDao.getInfoByName(no);
+			
+			mv.setViewName("member/memberInfo2");
+			mv.addObject("DATA", mVO);
+		}
+		return mv;
+	}
+	
+	/*
+	// 회원가입 아이디 체크
+	@ResponseBody
+	@RequestMapping(path="/idCheck.cls" , method=RequestMethod.POST)
+	public String idCheck() {
+		String result = "";
+		
+		return result;
+	}
+	*/
+	
 }

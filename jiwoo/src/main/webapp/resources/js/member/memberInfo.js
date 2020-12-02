@@ -73,12 +73,12 @@ $(document).ready(function(){
 			$('#pw').focus();
 			return;
 		}
-		/*
+		
 		// 동기 방식 처리
-		
 		$('#dfrm').submit();
-		*/
 		
+		
+		/*
 		// 비동기 방식 처리
 		var sno = $('#no').val();
 		$.ajax({
@@ -103,5 +103,6 @@ $(document).ready(function(){
 				alert('*** 통신 실패 ***');
 			}
 		});
+		*/
 	});
 });

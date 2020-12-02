@@ -21,5 +21,49 @@
 		WHERE
 			id = #{id}
 			AND pw = #{pw}
+			AND isshow = 'Y'
+	</select>
+	
+	<select id="getInfo" resultType="mVO" parameterType="string">
+		SELECT
+			mno, name, id, mail, m.gen, avt, joinDate, joinDate joinTime, afile avatar
+		FROM
+			member m, avatar a
+		WHERE
+			avt = ano
+			AND isshow = 'Y'
+			AND id = #{id}
+	</select>
+	
+	<!-- #{변수이름} 은 실제 dao에서 사용되는 매개변수 이름을 사용해야 한다!! -->
+	<update id="del_memb" parameterType="mVO">
+		UPDATE
+			member
+		SET
+			isshow = 'N'
+		WHERE
+			mno = #{mno}
+			AND pw = #{pw}
+	</update>
+	
+	<!-- resultType : 한 개 분 데이터 담는 것만 생각하자 -->
+	<select id="nameList" resultType="mVO">
+		SELECT
+			mno, name
+		FROM
+			member
+		WHERE
+			isshow = 'Y'
+	</select>
+	
+	<select id="getInfoByName" resultType="mVO" parameterType="int">
+		SELECT
+			mno, name, id, mail, m.gen, avt, joinDate, joinDate joinTime, afile avatar
+		FROM
+			member m, avatar a
+		WHERE
+			avt = ano
+			AND isshow = 'Y'
+			AND mno = #{mno}
 	</select>
 </mapper>	

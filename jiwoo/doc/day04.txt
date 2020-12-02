@@ -161,10 +161,10 @@ DI(Dependency Injection)
 
 		<bean id="infoPrint" class="jiwoo.util.MemberInfoPrint" >
 			명시적으로 set 함수를 이용해서 의존 주입을 시키도록 한다.
-			<property name="pring" ref="print2" />
+			<property name="print" ref="print2" />
 		</bean>
 		
-		public class MemberInfoPring {
+		public class MemberInfoPrint {
 			@Autowired
 			MemberDao mDao;
 			@Autowired
@@ -178,3 +178,6 @@ DI(Dependency Injection)
 	자동 의존 주입의 전제 조건
 	==> 먼저 bean 처리가 되어 있어야 한다.
 ************************************************************************************************
+------------------------------------------------------------------------------------------------------------------------
+
+ResponseBody
