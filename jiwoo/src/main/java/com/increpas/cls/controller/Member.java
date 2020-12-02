@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.increpas.cls.dao.MemberDao;
+import com.increpas.cls.util.*;
 import com.increpas.cls.vo.MemberVO;
 import java.util.*;
 
@@ -20,6 +21,8 @@ public class Member {
 	
 	@Autowired
 	MemberDao mDao;
+	@Autowired
+	W3Color color;
 	
 	@RequestMapping("/login.cls") // ==> 클래스의 /member 와 함수의 /login.cls 를 합쳐서 /member/login.cls 로 처리한다.
 	public String loginPage() {
@@ -141,7 +144,9 @@ public class Member {
 			mv.setViewName("redirect:/member/login.cls");
 		} else {
 			List<MemberVO> list = mDao.getNameList();
+			ArrayList<String> colors = color.getList();
 			// 데이터를 뷰에 전달하는 방법
+			mv.addObject("COLORS", colors);
 			mv.addObject("LIST", list);
 			mv.setViewName("member/memberList");
 		}
@@ -149,7 +154,7 @@ public class Member {
 	}
 	
 	// 이름버튼 클릭하면 회원정보 보기(포워드 방식)
-	@RequestMapping(path="/memberInfo2.cls", method=RequestMethod.POST)
+	@RequestMapping(path="/memberInfo2.cls", params="mno", method=RequestMethod.POST)
 	public ModelAndView getInfoByName(ModelAndView mv, String mno, HttpSession session) {
 //		System.out.println(mno);
 		String sid = (String) session.getAttribute("SID");
@@ -168,6 +173,15 @@ public class Member {
 			mv.addObject("DATA", mVO);
 		}
 		return mv;
+	}
+	
+	// 이름버튼 클릭하면 회원정보 보기(비동기 방식)
+	@ResponseBody
+	@RequestMapping(path="/memberInfoAjax.cls", method=RequestMethod.POST)
+	public MemberVO getInfoByName(int mno) {
+		MemberVO mVO = mDao.getInfoByName(mno);
+		
+		return mVO;
 	}
 	
 	/*
