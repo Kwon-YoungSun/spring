@@ -1,0 +1,236 @@
+1. D:class -> spring -> app, doc, source, git 폴더 생성
+
+2. maven 사이트에 접속 -> https://maven.apache.org/download.cgi
+download 탭의 apache-maven-3.6.3-bin.zip 파일을 app 폴더에 다운받고
+여기에 압축풀기 한다.
+
+3. 압축푼 폴더를 C:app에 복사하고
+
+4. 환경변수에 MVN_HOME, 주소는 C:\app\apache-maven-3.6.3 로 저장한다.
+
+5. 환경변수 Path 탭을 편집하고 %MVN_HOME%\bin으로 경로 설정한다.
+
+6. cmd 창에 mvn -version을 입력해서 버전이 뜨면 경로 설정이 제대로 된 것임.
+
+7. eclipse 실행하고 eclipse marketplace에 sts검색하자.
+	spring tools 3(standalone Edition) 인스톨하자.
+
+8. eclipse를 재실행 했을 때, Dashboard가 뜬다면 제대로 설치된 것이다.
+
+-----------------------------------------------------------------------------
+
+# 스프링 프로젝트 만들기
+
+1. file - new - other - spring - spring legacy project 선택
+	프로젝트 이름 : jiwoo
+	--> Templates / Spring MVC Project 선택
+	--> top level package : com.increpas.cls
+	
+2. jiwoo 프로젝트 우클릭 -> properties -> java build path -> jre system -> edit -> execution environment를 java se 1.8.0으로 변경
+	project facets -> dynamic web project를 3.1로, java를 1.8로 변경
+	
+3. 인코딩 utf-8 설정
+
+4. 서버 만들고
+
+5. server.xml과 web.xml에 인코딩 설정 되어있는지 확인하고
+
+-------------------------------------------------------------------------------
+
+1. ADT 방식
+	==> 이클립스 자체를 처음부터 스프링 프로젝트에 맞도록 만들어 놓고
+		필요한 라이브러리를 하나씩 복사해서 프로젝트를 진행하는 방법
+		(JSP 프로젝트와 동일한 방식)
+		
+2. MAVEN 방식
+	==> 이클립스는 원래 상태로 사용하면서
+		MAVEN 서버를 이용해서 필요한 라이브러리를 자동으로 불러와서
+		사용하는 방법
+		
+		이때
+		필요한 라이브러리에 대한 설정은
+		pom.xml 파일을 사용한다. (이것저것 많이 바꾼 것은 pom.xml 파일 참고하자)
+		
+		이 때 바뀌는 점이 있으면 그 때 그 때 메모해두어야 한다.
+		
+-------------------------------------------------------------------------------------------------------------------
+***
+pom.xml 초기 세팅 시 바꿔주는 것들
+
+1. 11행
+<properties>
+		<java-version>1.8</java-version>
+		<org.springframework-version>4.3.18.RELEASE</org.springframework-version>
+		<org.aspectj-version>1.9.2</org.aspectj-version>
+		<org.slf4j-version>1.6.6</org.slf4j-version>
+</properties>
+
+2. 95행
+<dependency>
+    <groupId>javax.servlet</groupId>
+    <artifactId>javax.servlet-api</artifactId>
+    <version>3.1.0</version>
+    <scope>provided</scope>
+</dependency>
+
+3. 101행
+<dependency>
+    <groupId>javax.servlet.jsp</groupId>
+    <artifactId>javax.servlet.jsp-api</artifactId>
+    <version>2.3.1</version>
+    <scope>provided</scope>
+</dependency>
+
+4. 113행
+<dependency>
+	<groupId>junit</groupId>
+	<artifactId>junit</artifactId>
+	<version>4.12</version>
+	<scope>test</scope>
+</dependency> 
+
+5. 122행
+<plugin>
+    <artifactId>maven-eclipse-plugin</artifactId>
+    <version>2.10</version>
+    <configuration>
+        <additionalProjectnatures>
+            <projectnature>org.springframework.ide.eclipse.core.springnature</projectnature>
+        </additionalProjectnatures>
+        <additionalBuildcommands>
+            <buildcommand>org.springframework.ide.eclipse.core.springbuilder</buildcommand>
+        </additionalBuildcommands>
+        <downloadSources>true</downloadSources>
+        <downloadJavadocs>true</downloadJavadocs>
+    </configuration>
+</plugin>
+
+6. 136행
+ <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-compiler-plugin</artifactId>
+    <version>3.8.1</version>
+    <configuration>
+        <source>1.8</source>
+        <target>1.8</target>
+        <compilerArgument>-Xlint:all</compilerArgument>
+        <showWarnings>true</showWarnings>
+        <showDeprecation>true</showDeprecation>
+    </configuration>
+</plugin>
+-------------------------------------------------------------------------------------------------------------------
+	단점 ]
+		네트워크가 항상 개설이 되어있어야 한다.(인터넷에 연결이 되어있어야 한다.)
+		
+	https://mvnrepository.com 에서 java servlet api라고 검색한다.
+		<dependency>
+		    <groupId>javax.servlet</groupId>
+		    <artifactId>javax.servlet-api</artifactId>
+		    <version>3.1.0</version>
+		    <scope>provided</scope>
+		</dependency>
+
+		<dependency>
+		    <groupId>javax.servlet.jsp</groupId>
+		    <artifactId>javax.servlet.jsp-api</artifactId>
+		    <version>2.3.1</version>
+		    <scope>provided</scope>
+		</dependency>
+
+	서버 실행하고 localhost/cls 해보자!
+
+--------------------------------------------------------------------------------------------------------------------
+
+참고 ]
+	Maven 방식이란 ?
+	자동적으로 필요한 라이브러리를 서버(MVN repository)에서 가져와서 적용시켜주도록 하는 방식을 말한다.
+	
+	이때 필요한 라이브러리는 pom.xml 파일에 등록을 하면
+	Maven 서버에서 자동으로 저장소에 접속을 해서
+	해당 라이브러리를 받아서 적용시켜주게 된다.
+	
+	따라서
+	앞으로는 필요한 라이브러리가 존재하면
+	해당 라이브러리를 다운받아서 적용하는 것이 아니고
+	pom.xml에 등록만 해주면 된다.
+	
+참고 ]
+	Maven 방식은 원칙적으로 필요한 라이브러리를
+	해당 저장소에 자동 접속해서 다운받아서 적용시켜준다.
+	이러다보니 처리속도가 늦는 경향이 발생한다.
+	
+	이런경우를 대비해서 Maven 서버는 해당 클라이언트의 시스템 안에
+	필요한 라이브러리를 저장해 놓고
+	필요하면 사이트에 접속을 하지 않고 사용하도록 한다.
+	
+	단점 ]
+		일단 필요한 라이브러리가 없으면 해당 저장소에 접속해서
+		라이브러리를 다운을 받은 후 프로젝트에 적용시켜준다.
+		
+		이때 잘못된 라이브러리가 다운로드 되더라도
+		Maven은 해당 라이브러리가 존재하면 그 손상된 라이브러리를 적용시킨다.
+		
+		즉, Maven은 이미 받아놓은 라이브러리만 적용시키도록 되어있다.
+		
+		해결방법 ]
+			받은 라이브러리를 강제로 삭제하고 다시 받아야 한다.
+			
+			이때 라이브러리가 다운로드 되는 경로는
+			
+			c:\Users(사용자)\로그인계정\.m2\repository
+			폴더에 다운 받는다.
+---------------------------------------------------------------------------------------------------------------------------
+프로젝트 폴더 설명
+	src
+		main
+			java 		- JSP 프로젝트의 Java Resources 와 같은 폴더
+			resources
+			webapp		- JSP 프로젝트의 WebContent 와 같은 폴더
+				1 ----------------------------------------------------------- controller 를 거치지 않고 호출할 수 있는 jsp
+				WEB-INF 
+					classes
+					spring ---------------------------------------------------- 프로젝트에 적용시키는 설정파일들이 위치하는 곳
+					views ----------------------------------------------------- 반드시 controller 를 거치는 위치
+
+xml 적용시키는 순서
+
+	1. 서버의 web.xml
+	2. 스프링의 web.xml
+		스프링에서는 web.xml 자체에서 데이터베이스를 읽어오는 기능을 지정해놓았다.
+		
+---------------------------------------------------------------------------------------------------------------------------
+
+참고 ]
+	pom.xml
+	==> Maven 이 읽어서 가져올 라이브러리를 설정하는 설정 파일
+	
+	1. <properties> : pom.xml 내부에서 사용할 변수를 선언하는 태그
+	
+		변수 적용은 입력할 곳에
+			${변수이름}
+		
+	2. <dependencies>
+		이 태그 하위에 필요한 라이브러리를 태그 형식으로 기술하면 된다.
+		
+		추가 구조 ]
+			<dependency>
+				<groupId>배포단체아이디</grouptId>
+				<artifactId>배포프로젝트명</artifactId>
+				<version>버전</version>
+				<scope>.......</scope>
+				
+				provided : 외부에서 적용한 라이브러리
+				test	 : 테스트 환경에서 적용되는 라이브러리
+			</dependency>
+			
+		주의! maven repository에 기술된 코드와 똑같이 써야 적용이 된다.
+		
+***
+DB 세팅하기
+1. maven repositories -> spring-jdbc검색
+	org.springframework-version과 같은 버전으로 하기!
+2. maven repositories -> ojdbc6 검색 -> 복붙
+
+주의 ]
+ this artifact is located at Atlassian 3rdParty repository (https://packages.atlassian.com/maven-3rdparty/)
+ 이런 문구가 있으면 가져다 쓸 수가 없다
