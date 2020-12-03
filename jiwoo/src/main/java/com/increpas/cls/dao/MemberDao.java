@@ -2,10 +2,10 @@ package com.increpas.cls.dao;
 
 import java.util.*;
 
-import org.mybatis.spring.SqlSessionTemplate;
+import org.mybatis.spring.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.increpas.cls.vo.MemberVO;
+import com.increpas.cls.vo.*;
 
 public class MemberDao {
 	@Autowired
@@ -35,5 +35,15 @@ public class MemberDao {
 	// 회원 이름에 따른 회원 정보 조회 전담 처리함수
 	public MemberVO getInfoByName(int mno) {
 		return sqlSession.selectOne("mSQL.getInfoByName", mno);
+	}
+	
+	// 아바타 리스트 가져오기 전담 처리함수
+	public List<AvatarVO> getAvtList() {
+		return sqlSession.selectList("aSQL.getAll");
+	}
+	
+	// 회원 아이디 체크 전담 처리 함수
+	public int getIdCnt(String id) {
+		return sqlSession.selectOne("mSQL.idCount", id);
 	}
 }

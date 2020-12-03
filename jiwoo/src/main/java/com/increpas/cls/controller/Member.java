@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import com.increpas.cls.dao.MemberDao;
+import com.increpas.cls.dao.*;
 import com.increpas.cls.util.*;
-import com.increpas.cls.vo.MemberVO;
+import com.increpas.cls.vo.*;
 import java.util.*;
 
 @Controller
@@ -94,11 +94,32 @@ public class Member {
 		*/
 		if(sid == null || sid.length() == 0) {
 			mv.setViewName("member/join");
+			// 데이터 만들고
+			List<AvatarVO> list = mDao.getAvtList();
+			// 데이터 뷰에 보내고
+			mv.addObject("LIST", list);
 		} else {
 			rd.setUrl("/cls/main.cls");
 			mv.setView(rd);
 		}
 		return mv;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/idCheck.cls")
+	public HashMap<String, String> idCheck(String id) {
+		// 할일
+		// 데이터베이스에서 조회하고
+		// 참고 : json 형식 var 변수 = {키값:데이터, 키값:데이터}
+		/*
+		int cnt = mDao.getIdCnt(id);
+		String result = (cnt == 0)? "OK" : "NO";
+		map.put("result", result);
+		*/
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("result", (mDao.getIdCnt(id) == 0) ? "OK" : "NO");
+		// ==> {'result' : 'OK'} or {'result': 'NO'}
+		return map;
 	}
 	
 	@RequestMapping("/memberInfo.cls")
@@ -184,15 +205,5 @@ public class Member {
 		return mVO;
 	}
 	
-	/*
-	// 회원가입 아이디 체크
-	@ResponseBody
-	@RequestMapping(path="/idCheck.cls" , method=RequestMethod.POST)
-	public String idCheck() {
-		String result = "";
-		
-		return result;
-	}
-	*/
 	
 }

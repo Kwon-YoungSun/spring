@@ -52,5 +52,24 @@
 	</servlet-mapping>
 
 
-
+	<!-- POST 방식으로 넘어오는 한글 데이터 깨짐을 방지하기 위한 필터링 처리 -->
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>
+			org.springframework.web.filter.CharacterEncodingFilter
+		</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-patterm>/*</url-patterm>
+	</filter-mapping>
 </web-app>
