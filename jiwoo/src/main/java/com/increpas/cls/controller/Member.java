@@ -1,5 +1,6 @@
 package com.increpas.cls.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,9 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.increpas.cls.dao.*;
 import com.increpas.cls.util.*;
 import com.increpas.cls.vo.*;
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
 import java.util.*;
 
 @Controller
@@ -116,10 +120,63 @@ public class Member {
 		String result = (cnt == 0)? "OK" : "NO";
 		map.put("result", result);
 		*/
+		// HashMap을 매개변수로 받아 사용하면 에러가 난다. 왜냐? 생성이 안되있어서...
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("result", (mDao.getIdCnt(id) == 0) ? "OK" : "NO");
 		// ==> {'result' : 'OK'} or {'result': 'NO'}
 		return map;
+	}
+	
+	@RequestMapping("/joinProc.cls")
+	public ModelAndView joinProc(ModelAndView mv, MemberVO mVO, HttpSession session) {
+		// 할 일
+		// 데이터베이스 작업하고
+		int cnt = mDao.insertMember(mVO);
+		
+		if(cnt == 1) {
+			// 성공하면 로그인 처리하고
+			session.setAttribute("SID", mVO.getId());
+			// 메인페이지로 이동하고
+			mv.setViewName("redirect:/main.cls");
+		} else {
+			// 실패한 경우
+			// 회원가입페이지로 다시 이동시키고
+			mv.setViewName("redirect:/member/join.cls");
+		}
+		return mv;
+	}
+	
+	@RequestMapping(value="/joinAjaxProc.cls", method=RequestMethod.POST)
+	@ResponseBody
+	public String joinAjaxProc(HttpServletRequest req, MemberVO mVO, HttpSession session){
+		MultipartRequest multi;
+		String path = session.getServletContext().getRealPath("resources/img/upload");
+		String result = "OK";
+		try {
+			multi = new MultipartRequest(req, path, 1024*1024*10, "UTF-8", new DefaultFileRenamePolicy());
+		
+			mVO.setName(multi.getParameter("name"));
+			mVO.setId(multi.getParameter("id"));
+			mVO.setPw(multi.getParameter("pw"));
+			mVO.setMail(multi.getParameter("mail"));
+			mVO.setGen(multi.getParameter("gen"));
+			mVO.setAvt(Integer.parseInt(multi.getParameter("avt")));
+			
+			int cnt = mDao.insertMember(mVO);
+			
+			if(cnt == 1) {
+				// 성공하면 로그인 처리하고
+				session.setAttribute("SID", mVO.getId());
+			} else {
+				result = "NO";
+			}
+		} catch(Exception e) {
+			System.out.println("############## 데이터 전송 실패 ################");
+			result = "NO";
+			e.printStackTrace();
+		}
+		System.out.println(result);
+		return result;
 	}
 	
 	@RequestMapping("/memberInfo.cls")

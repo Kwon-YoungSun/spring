@@ -187,6 +187,7 @@ $(document).ready(function(){
 		// 데이터 유효성 검사하고
 		var sid = $('#id').val();
 		var spw = $('#pw').val();
+		var srepw = $('#repw').val();
 		var sname = $('#name').val();
 		var smail = $('#mail').val();
 		var tel = $('#tel').val();
@@ -195,11 +196,53 @@ $(document).ready(function(){
 		
 		if(!(sid && spw && sname && smail && tel && sgen && savt)){
 			// 입력하지 않은 태그가 적어도 한 개가 존재하므로
-			return;	
+			alert('입력하지 않은 정보를 확인하세요.');
+			return;
 		}
+		
+		if(spw != srepw){
+			alert('비밀번호 확인이 일치하지 않습니다.');
+			$('#repw').focus();
+			return;
+		}
+		
+		/*
+		// 1. 포워드 방식으로 회원가입
 		$('#frm').attr('method', 'POST');
 		$('#frm').attr('action', '/cls/member/joinProc.cls');
 		$('#frm').submit();
+		*/
+		
+		
+		// 2. 비동기 통신으로 회원가입
+		// 먼저 formData 객체를 생성하고, 폼태그 전체를 가져온다.
+		// 비동기 통신에서 form 태그를 전송할 경우
+		// 해당 form 태그의 encType 속성이 반드시 기술되어야 한다.
+		var el = $('#frm');
+		$(el).attr('encType', 'multipart/form-data');
+		var formData = new FormData($(el)[0]);
+//		formData.append('aProc', 'OK');
+		// 비동기 통신을 하자.
+		$.ajax({
+			url: '/cls/member/joinAjaxProc.cls',
+			type: 'POST',
+			dataType: 'text',
+			processData: false,
+			contentType: false,
+			data: formData,
+			success: function(obj){
+				if(obj == 'OK'){
+					alert('회원가입 성공!');
+					$(location).attr('href', '/cls/main.cls');
+				} else {
+					alert('*** 회원가입 실패 ***');
+				}
+			},
+			error: function(){
+				alert('### 통신에러 ###');
+			}
+		});
+		
 	});
 });
 

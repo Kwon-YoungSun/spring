@@ -66,4 +66,18 @@
 			AND isshow = 'Y'
 			AND mno = #{mno}
 	</select>
+	
+	<insert id="addMember" parameterType="mVO">
+		<selectKey keyProperty="mno" resultType="int" order="BEFORE">
+			SELECT
+				NVL(MAX(mno) + 1, 1001)
+			FROM
+				member
+		</selectKey>
+		INSERT INTO
+			member(mno, id, pw, name, mail, gen, avt)
+		VALUES(
+			#{mno}, #{id}, #{pw}, #{name}, #{mail}, #{gen}, #{avt}
+		)
+	</insert>
 </mapper>	

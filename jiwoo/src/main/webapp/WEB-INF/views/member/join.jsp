@@ -21,7 +21,7 @@
 <body>
 	<div class="w3-content w3-center mw650">
 		<h1 class="w3-indigo w3-padding w3-card-4 w3-margin-top">Cls Join</h1>
-		<form method="post" action="/cls/member/joinProc.cls" id="frm" name="frm" 
+		<form method="POST" id="frm" name="frm"
 				class="w3-col w3-padding w3-card-4 w3-margin-top">
 			<div class="w3-col">
 				<label for="name" class="w3-col l3 m3 w3-right-align w3-padding">회 원 이 름 : </label>

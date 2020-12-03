@@ -46,4 +46,9 @@ public class MemberDao {
 	public int getIdCnt(String id) {
 		return sqlSession.selectOne("mSQL.idCount", id);
 	}
+	
+	// 회원 가입 전담 처리 함수
+	public int insertMember(MemberVO mVO) {
+		return sqlSession.insert("mSQL.addMember", mVO);
+	}
 }

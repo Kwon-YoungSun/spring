@@ -70,6 +70,6 @@
 	
 	<filter-mapping>
 		<filter-name>encodingFilter</filter-name>
-		<url-patterm>/*</url-patterm>
+		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 </web-app>
