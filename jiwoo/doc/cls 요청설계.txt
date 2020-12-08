@@ -185,13 +185,13 @@
 컨트롤러 : com.increpas.cls.controller.ReBoard.reBoardEditView()
 뷰		 : /WEB+INF/views/reBoard/ReBoardEdit.jsp
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-# 댓글게시판 댓글작성 폼 요청
+* 댓글게시판 댓글작성 폼 요청
 요청내용 : /cls/reBoard/reBoardComment.cls
 파라미터 : bno(글번호), body, nowPage
 컨트롤러 : com.increpas.cls.controller.ReBoard.reBoardComment()
 뷰		 : /WEB-INF/views/reBoard/ReBoardComment.jsp
 ------------------------------------------------------------------
-# 댓글게시판 댓글입력 요청 
+* 댓글게시판 댓글입력 요청 
 요청내용 : /cls/reBoard/reBoardCommentProc.cls
 파라미터 : upno(글번호), body, nowPage[ , SID ]
 컨트롤러 : com.increpas.cls.controller.ReBoard.reBoardCommentProc()

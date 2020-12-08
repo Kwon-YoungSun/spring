@@ -68,10 +68,13 @@
 	</update>
 	
 	<insert id="addReboard" parameterType="rVO">
+		<selectKey keyProperty="bno" resultType="int" order="BEFORE">
+			SELECT NVL(MAX(bno) + 1, 10001) FROM reboard
+		</selectKey>
 		INSERT INTO 
 	    	reboard(bno, b_mno, body, upno) 
 	    VALUES( 
-	    		(SELECT NVL(MAX(bno) + 1, 10001) FROM reboard), 
+	    		#{bno},
 	    		(SELECT mno FROM member WHERE id = #{id}), #{body}, #{upno}
 	    ) 
 	</insert>

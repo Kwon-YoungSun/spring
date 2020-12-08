@@ -1,6 +1,6 @@
 $(document).ready(function(){
 	$('#rbtn').click(function(){
-		$('#tbody').val('');
+		$('#body').val('');
 	});
 	
 	$('#wrbtn').click(function(){

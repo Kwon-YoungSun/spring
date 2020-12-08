@@ -38,4 +38,9 @@ public class ReBoardDao {
 	public int editReboard(ReBoardVO rVO) {
 		return sqlSession.update("rSQL.editReboard", rVO);
 	}
+	
+	// 게시판 댓글 작성 전담 처리 함수
+	public int addReboard(ReBoardVO rVO) {
+		return sqlSession.insert("rSQL.addReboard", rVO);
+	}
 }

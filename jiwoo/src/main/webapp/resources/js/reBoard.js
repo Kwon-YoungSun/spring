@@ -82,7 +82,6 @@ $(document).ready(function(){
 			url = '/cls/reBoard/reBoardEditProc.cls';	
 		}
 		
-		alert($('#body').val());
 		$('#frm').attr('method', 'POST');
 		$('#frm').attr('action', url);
 		$('#frm').submit();

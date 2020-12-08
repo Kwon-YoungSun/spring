@@ -22,9 +22,10 @@
 				</div>
 				<form method="POST" action="/cls/reBoard/reBoardCommentProc.cls" class="w3-rest" id="frm" name="frm">
 					<input type="hidden" id="upno" name="upno" value="${bno}">
+					<input type="hidden" id="id" name="id" value="${SID}">
 					<input type="hidden" name="nowPage" value="${nowPage}">
 
-					<textarea class="w3-input w3-border h72" style="resize: none;" id="tbody" name="tbody" placeholder="메세지를 작성하세요!"></textarea>
+					<textarea class="w3-input w3-border h72" style="resize: none;" id="body" name="body" placeholder="메세지를 작성하세요!"></textarea>
 					<div class="w3-col pdh1 mt5">
 						<span class="w3-col m2 w3-left w3-button w3-small w3-lime w3-hover-light-green btn" id="rbtn">reset</span>
 						<span class="w3-col m2 w3-right w3-button w3-small w3-pink w3-hover-purple btn" id="wrbtn">댓 글 등 록</span>

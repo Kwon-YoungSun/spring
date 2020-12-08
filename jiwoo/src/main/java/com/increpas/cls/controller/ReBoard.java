@@ -27,6 +27,10 @@ public class ReBoard {
 		rVO.setPage(page);
 		// dao 처리하고 리스트 받고
 		List<ReBoardVO> list = rDao.getList(rVO);
+		for(int i = 0; i < list.size(); i++) {
+			String body = list.get(i).getBody().replace("\r\n", "<br>");
+			list.get(i).setBody(body);
+		}
 		// 아바타 가져오고
 		String id = (String) session.getAttribute("SID");
 		if(id != null) {
@@ -97,6 +101,20 @@ public class ReBoard {
 		mv.addObject("bno", bno);
 		mv.addObject("nowPage", nowPage);
 		mv.setViewName("reBoard/reBoardComment");
+		return mv;
+	}
+	
+	@RequestMapping("/reBoardCommentProc.cls")
+	public ModelAndView reBoardCommentProc(ModelAndView mv, HttpSession session, int nowPage, ReBoardVO rVO) {
+		// 세션 검사
+		String id = (String) session.getAttribute("SID");
+		if(id == null) {
+			mv.setViewName("redirect:/member/login.cls");
+			return mv;
+		}
+		int cnt = 0;
+		cnt = rDao.addReboard(rVO);
+		mv.setViewName("redirect:/reBoard/reBoardList.cls?nowPage=" + nowPage);
 		return mv;
 	}
 }
