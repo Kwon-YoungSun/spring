@@ -22,13 +22,38 @@ public class PageUtil {
 	private int startCont;	// 현재 페이지에서 보여줄 시작 게시물 로우넘버
 	private int endCont;	// 현재 페이지에서 보여줄 마지막 게시물 로우넘버
 	
-	public PageUtil() {}
-	
+	public PageUtil() {
+		nowPage = 1;
+	}
+	/*
 	public PageUtil(int nowPage, int totalCount) {
 		this(nowPage, totalCount, 3, 3);
 	}
 	
 	public PageUtil(int nowPage, int totalCount, int pageRow, int pageGroup) {
+		this.nowPage = nowPage;
+		this.totalCount = totalCount;
+		this.pageRow = pageRow;
+		this.pageGroup = pageGroup;
+		
+		calcPage();
+		calcStart();
+		calcEnd();
+		calcCont();
+	}
+	*/
+	public void setPage() {
+		if(nowPage == 0) {
+			nowPage = 1;
+		}
+		setPage(nowPage, totalCount, 3, 3);
+	}
+	
+	public void setPage(int nowPage, int totalCount) {
+		setPage(nowPage, totalCount, 3, 3);
+	}
+	
+	public void setPage(int nowPage, int totalCount, int pageRow, int pageGroup) {
 		this.nowPage = nowPage;
 		this.totalCount = totalCount;
 		this.pageRow = pageRow;

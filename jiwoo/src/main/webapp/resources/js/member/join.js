@@ -117,7 +117,8 @@ $(document).ready(function(){
 		var spw = $(this).val();
 		
 		// 정규식 패턴 만들고
-		var pattern = /^(?=^[a-zA-Z0-9#@!$%&*-_]{8,})(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[#@!$%&*-_]).*$/;
+/*		var pattern = /^(?=^[a-zA-Z0-9#@!$%&*-_]{8,})(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[#@!$%&*-_]).*$/; */
+		var pattern = /^[0-9]{3,}$/;
 		// 검사하고
 		var result = pattern.test(spw);
 		// 결과로 처리하고
@@ -218,10 +219,10 @@ $(document).ready(function(){
 		// 먼저 formData 객체를 생성하고, 폼태그 전체를 가져온다.
 		// 비동기 통신에서 form 태그를 전송할 경우
 		// 해당 form 태그의 encType 속성이 반드시 기술되어야 한다.
+		$('#frm').attr('encType', 'multipart/form-data');
 		var el = $('#frm');
-		$(el).attr('encType', 'multipart/form-data');
 		var formData = new FormData($(el)[0]);
-//		formData.append('aProc', 'OK');
+
 		// 비동기 통신을 하자.
 		$.ajax({
 			url: '/cls/member/joinAjaxProc.cls',
@@ -239,7 +240,7 @@ $(document).ready(function(){
 				}
 			},
 			error: function(){
-				alert('### 통신에러 ###');
+				alert('### 통신 에러 ###');
 			}
 		});
 		

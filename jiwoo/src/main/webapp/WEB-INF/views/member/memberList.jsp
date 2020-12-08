@@ -13,6 +13,10 @@
 	.namelist{
 		line-height: 220%;
 	}
+	
+	#editB, #outB{
+		visibility: hidden;
+	}
 </style>
 <script type="text/javascript">
 	$(function(){
@@ -39,6 +43,7 @@
 <body>
 	<form id="frm" name="frm" method="POST">
 		<input type="hidden" id="mno" name="mno">
+		<input type="hidden" id="sid" name="sid" value="${SID}">
 	</form>
 	<div class="w3-content w3-center mw750">
 		<h1 class="w3-col w3-center w3-padding w3-deep-purple">회원 리스트</h1>
@@ -52,7 +57,8 @@
 			<div id="${list.mno}" class="w3-col m2 w3-button ${COLORS[i]} w3-margin-bottom w3-margin-top namelist">${list.name}</div>
 </c:forEach>
 		</div>
-		
+		<div class="w3-button w3-right w3-red w3-small w3-round" id="outB">탈퇴</div>
+		<div class="w3-button w3-right w3-green w3-small w3-round" id="editB">edit</div>
 		<div id="infobox" class="w3-col w3-card-4 w3-border w3-text-gray w3-margin-top w3-margin-bottom" style="padding: 20px; margin-top: 25px; display: none;">
 			<div class="w3-row">
 				<div class="w3-card-4 w3-col m5">
@@ -87,6 +93,7 @@
 					</div>
 				</div>
 			</div>
+			
 		</div>
 		
 	</div>

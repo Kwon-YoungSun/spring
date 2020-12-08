@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.mybatis.spring.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.increpas.cls.vo.*;
 
@@ -50,5 +51,20 @@ public class MemberDao {
 	// 회원 가입 전담 처리 함수
 	public int insertMember(MemberVO mVO) {
 		return sqlSession.insert("mSQL.addMember", mVO);
+	}
+	
+	// 회원 정보 수정 전담 처리함수
+	public int editMember(MemberVO mVO) {
+		return sqlSession.update("mSQL.editMember", mVO);
+	}
+	
+	// 여러 명 회원 가입 트랜젝션 테스트 전담 처리 함수
+	@Transactional
+	public int insertMember(ArrayList<MemberVO> list) {
+		int cnt = 0;
+		for(MemberVO mVO : list) {
+			cnt += insertMember(mVO);
+		}
+		return cnt;
 	}
 }

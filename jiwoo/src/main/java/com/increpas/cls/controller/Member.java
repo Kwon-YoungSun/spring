@@ -146,6 +146,7 @@ public class Member {
 		return mv;
 	}
 	
+	/*
 	@RequestMapping(value="/joinAjaxProc.cls", method=RequestMethod.POST)
 	@ResponseBody
 	public String joinAjaxProc(HttpServletRequest req, MemberVO mVO, HttpSession session){
@@ -178,20 +179,84 @@ public class Member {
 		System.out.println(result);
 		return result;
 	}
+	*/
+	
+	@RequestMapping(value="/joinAjaxProc.cls", method=RequestMethod.POST)
+	@ResponseBody
+	public String joinAjaxProc(MemberVO mVO, HttpSession session){
+		
+		String result = "OK";
+//		System.out.println("### cont vo id : " + mVO.getId());
+		// VO가 완성됬으니 데이터베이스 작업하고
+		ArrayList<MemberVO> list = new ArrayList<MemberVO>();
+		list.add(mVO);
+//		list.add(new MemberVO());
+		int cnt = 0;
+		try {
+			cnt = mDao.insertMember(list);			
+		} catch(Exception e) {
+			cnt = 0;
+		}
+		/*
+		int cnt = mDao.insertMember(mVO);
+		*/
+		if(cnt == 1) {
+			// 성공하면 로그인 처리하고
+			session.setAttribute("SID", mVO.getId());
+		} else {
+			result = "NO";
+		}
+		
+		return result;
+	}
 	
 	@RequestMapping("/memberInfo.cls")
-	public ModelAndView getInfo(ModelAndView mv, HttpSession session, RedirectView rv) {
-		String sid = (String) session.getAttribute("SID");
-		if(sid == null) {
+	public ModelAndView getInfo(ModelAndView mv, HttpSession session, RedirectView rv, String id, String msg) {
+//		String sid = (String) session.getAttribute("SID");
+		if(msg != null) {
+			mv.addObject("MSG", msg);
+		}
+		if(id != null) {
+			mv.addObject("ID", id);
+		}
+		
+		if(id == null) {
 			rv.setUrl("/cls/member/login.cls");
 			mv.setView(rv);
 		} else {
 			mv.setViewName("member/memberInfo");
-			MemberVO mVO = mDao.getInfo(sid);
-			
+			MemberVO mVO = mDao.getInfo(id);
+			List<AvatarVO> list = mDao.getAvtList();
 			mv.addObject("DATA", mVO);
+			mv.addObject("LIST", list);
 		}
 		
+		return mv;
+	}
+	
+	@RequestMapping("/memberEditProc.cls")
+	public ModelAndView memberEditProc(ModelAndView mv, MemberVO mVO) {
+		String msg = "수정에 성공했습니다.";
+		mv.setViewName("redirect:/member/memberInfo.cls?id=" + mVO.getId() + "&msg=" + msg);
+		/*
+			jsp에서 파라미터 꺼내서 사용하는 방법
+				${param.msg}
+				
+			이 경우 전달되는 데이터는 주소표시줄에 노출이 되고
+			데이터를 꺼내는 구문도 길어진다.
+			따라서 여기서는 리다이렉트 jsp 페이지를 만들고
+			해당 페이지가 열리면 바로 post 방식으로 리다이렉트가 이루어지도록
+			처리를 해보자.
+		 */
+		int cnt = mDao.editMember(mVO);
+		if(cnt != 1) {
+			// 수정에 실패한 경우
+			msg = "정보수정에 실패했습니다!";
+		}
+		
+		mv.setViewName("member/redirect");
+		mv.addObject("ID", mVO.getId());
+		mv.addObject("MSG", msg);
 		return mv;
 	}
 	

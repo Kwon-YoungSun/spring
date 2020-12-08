@@ -33,15 +33,21 @@
 컨트롤러 : com.increpas.cls.controller.Member.joinForm()
 뷰		 : /WEB-INF/views/member/Join.jsp
 -----------------------------------------------------------
-# 회원가입 처리 요청
+* 회원가입 처리 요청
 요청내용 : /cls/member/joinProc.cls
-파라미터 : name, id, pw, mail, tel, gen, avt
-컨트롤러 : com.increpas.cls.controller.member.Join
+파라미터 : (name, id, pw, mail, tel, gen, avt)
+컨트롤러 : com.increpas.cls.controller.Member.joinProc()
 뷰		 : redirect ]
 					성공 : /cls/guestBoard/guestBoard.cls
 					실패 : /cls/member/join.cls
 -----------------------------------------------------------
-# 회원아이디 체크 처리 요청
+# 회원가입 처리 요청(비동기)
+요청내용 : /cls/member/joinAjaxProc.cls
+파라미터 : (name, id, pw, mail, tel, gen, avt)
+컨트롤러 : com.increpas.cls.controller.Member.joinAjaxProc()
+뷰		 : Ajax ]
+-----------------------------------------------------------
+* 회원아이디 체크 처리 요청
 요청내용 : /cls/member/idCheck.cls
 파라미터 : id
 컨트롤러 : com.increpas.cls.controller.Member.IdCheck()
@@ -61,9 +67,17 @@
 				성공 : /cls/main.cls
 				실패 : /cls/member/memberInfo.cls
 -----------------------------------------------------------
-# 회원정보 수정 페이지 처리 요청
+* 회원정보 수정 동기 처리 요청
+요청내용 : /cls/member/memberEditProc.cls
+파라미터 : mail, avt ==> mVO
+컨트롤러 : com.increpas.cls.controller.Member.memberEditProc.cls
+뷰		 : redirect ]
+				성공 : /cls/member/memberInfo.cls
+				실패 : /cls/member/memberInfo.cls
+-----------------------------------------------------------
+# 회원정보 수정 비동기 처리 요청
 요청내용 : /cls/member/memberEdit.cls
-파라미터 : mail, avt
+파라미터 : (mail, avt) ==> formData 전송
 컨트롤러 : com.increpas.cls.controller.member.MemberEdit.cls
 뷰		 : ajax ] text
 -----------------------------------------------------------
@@ -99,22 +113,22 @@
 # 방명록 폼 보기 요청
 요청내용 : /cls/guestBoard/guestBoard.cls
 파라미터 : 무 (SID)
-컨트롤러 : com.increpas.cls.controller.guestBoard.GuestBoard
+컨트롤러 : com.increpas.cls.controller.GuestBoard.gBoardForm()
 뷰		 : /WEB-INF/views/com/increpas/cls/guestBoard/GuestBoard.jsp
 -----------------------------------------------------------
 # 방명록 글 등록 처리 요청
 요청내용 : /cls/guestBoard/gBoardWrite.cls
 파라미터 : 무 (SID)
-컨트롤러 : com.increpas.cls.controller.guestBoard.GBoardWrite
+컨트롤러 : com.increpas.cls.controller.GuestBoard.gBoardWrite()
 뷰		 : redirect ]
-				성공 : /cls/guestBoard/guestBoard.cls
+				성공 : /cls/guestBoard/gBoardList.cls
 				실패 : /cls/member/login.cls
 -----------------------------------------------------------
 # 방명록 리스트 보기 요청
 요청내용 : /cls/guestBoard/gBoardList.cls
 파라미터 : nowPage
 컨트롤러 : com.increpas.cls.controller.guestBoard.GBoardList
-뷰		 : /WEB-INF/views/com/increpas/cls/guestBoard/GBoardList.jsp
+뷰		 : /WEB-INF/views/guestBoard/GBoardList.jsp
 -----------------------------------------------------------
 
 
@@ -134,52 +148,53 @@
 ---------------------------------------------------------------------------------
 										[ Paging ]
 						
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # 댓글게시판 더미데이터 삽입 요청
 요청내용 : /cls/reBoard/initRBD.cls
 파라미터 : id, body
-컨트롤러 : com.increpas.cls.controller.reBoard.InitRBD
+컨트롤러 : com.increpas.cls.controller.ReBoard.addRBD()
 뷰		 : redirect ] /cls/guestBoard/ReBoardList.cls
-------------------------------------------------------------------
-# 댓글게시판 게시글 보기 요청
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+* 댓글게시판 게시글 보기 요청
 요청내용 : /cls/reBoard/reBoardList.cls
 파라미터 : nowPage
-컨트롤러 : com.increpas.cls.controller.reBoard.ReBoardList
-뷰		 : /WEB-INF/views/com/increpas/cls/reBoard/ReBoard.jsp
+컨트롤러 : com.increpas.cls.controller.ReBoard.reBoardList()
+뷰		 : /WEB-INF/views/reBoard/ReBoard.jsp
 ------------------------------------------------------------------
-# 댓글게시판 원글 쓰기 요청
+* 댓글게시판 원글 쓰기 요청
 요청내용 : /cls/reBoard/reBoardWriteProc.cls
 파라미터 : id
-컨트롤러 : com.increpas.cls.controller.reBoard.ReBoardWriteProc
+컨트롤러 : com.increpas.cls.controller.ReBoard.reBoardWriteProc()
 뷰		 : redirect ] /cls/reBoard/reBoardList.cls
 ------------------------------------------------------------------
-# 댓글게시판 글삭제 요청
+* 댓글게시판 글삭제 요청
 요청내용 : /cls/reBoard/reBoardDelProc.cls
 파라미터 : bno(글번호)
-컨트롤러 : com.increpas.cls.controller.reBoard.ReBoardDelProc
+컨트롤러 : com.increpas.cls.controller.ReBoard.reBoardDelProc()
 뷰		 : redirect ] /cls/reBoard/reBoardList.cls
 ------------------------------------------------------------------
-# 댓글게시판 글수정처리 요청
+* 댓글게시판 글수정처리 요청
 요청내용 : /cls/reBoard/reBoardEditProc.cls
 파라미터 : bno(글번호), body, nowPage
-컨트롤러 : com.increpas.cls.controller.reBoard.ReBoardEdit
+컨트롤러 : com.increpas.cls.controller.ReBoard.reBoardEdit()
 뷰		 : redirect ] /cls/reBoard/reBoardList.cls
-------------------------------------------------------------------
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # 댓글게시판 글수정 폼보기 요청
 요청내용 : /cls/reBoard/reBoardEditView.cls
 파라미터 : bno(글번호), body, nowPage
-컨트롤러 : com.increpas.cls.controller.reBoard.ReBoardEditView
-뷰		 : /WEB-INF/views/com/increpas/cls/reBoard/ReBoardEdit.jsp
-------------------------------------------------------------------
+컨트롤러 : com.increpas.cls.controller.ReBoard.reBoardEditView()
+뷰		 : /WEB+INF/views/reBoard/ReBoardEdit.jsp
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # 댓글게시판 댓글작성 폼 요청
 요청내용 : /cls/reBoard/reBoardComment.cls
 파라미터 : bno(글번호), body, nowPage
-컨트롤러 : com.increpas.cls.controller.reBoard.ReBoardComment
-뷰		 : /WEB-INF/views/com/increpas/cls/reBoard/ReBoardComment.jsp
+컨트롤러 : com.increpas.cls.controller.ReBoard.reBoardComment()
+뷰		 : /WEB-INF/views/reBoard/ReBoardComment.jsp
 ------------------------------------------------------------------
 # 댓글게시판 댓글입력 요청 
 요청내용 : /cls/reBoard/reBoardCommentProc.cls
 파라미터 : upno(글번호), body, nowPage[ , SID ]
-컨트롤러 : com.increpas.cls.controller.reBoard.ReBoardCommentProc
+컨트롤러 : com.increpas.cls.controller.ReBoard.reBoardCommentProc()
 뷰		 : redirect ] /cls/reBoard/reBoardList.cls
 ------------------------------------------------------------------
 
@@ -187,27 +202,27 @@
 ------------------------------------------------------------------
 ### 설문조사 요청설계 ###
 ------------------------------------------------------------------
-# 설문조사 주제 폼 요청
+* 설문조사 주제 폼 요청
 요청내용 : /cls/survey/surveyInfo.cls
 파라미터 : 무
-컨트롤러 : com.increpas.cls.controller.survey.SurveyInfo
-뷰		 : /WEB-INF/views/com/increpas/cls/survey/SurveyInfo.jsp
+컨트롤러 : com.increpas.cls.controller.Survey.surveyInfo()
+뷰		 : /WEB-INF/views/survey/SurveyInfo.jsp
 ------------------------------------------------------------------
-# 설문참여 폼 요청
+* 설문참여 폼 요청
 요청내용 : /cls/survey/survey.cls
 파라미터 : sno(설문번호)
-컨트롤러 : com.increpas.cls.controller.survey.Survey
-뷰		 : /WEB-INF/views/com/increpas/cls/survey/Survey.jsp
+컨트롤러 : com.increpas.cls.controller.Survey.survey()
+뷰		 : /WEB-INF/views/survey/Survey.jsp
 ------------------------------------------------------------------
-# 설문조사 처리 요청
+* 설문조사 처리 요청
 요청내용 : /cls/survey/surveyProc.cls
 파라미터 : qno
-컨트롤러 : com.increpas.cls.controller.survey.SurveyProc
+컨트롤러 : com.increpas.cls.controller.Survey.surveyProc()
 뷰		 : redirect ] /cls/survey/surveyResult.cls
 ------------------------------------------------------------------
-# 설문조사 결과 폼 요청
+* 설문조사 결과 폼 요청
 요청내용 : /cls/survey/surveyResult.cls
 파라미터 : sno
-컨트롤러 : com.increpas.cls.controller.survey.SurveyResult
-뷰		 : /WEB-INF/views/com/increpas/cls/survey/SurveyResult.jsp
+컨트롤러 : com.increpas.cls.controller.Survey.surveyResult()
+뷰		 : /WEB-INF/views/survey/SurveyResult.jsp
 ------------------------------------------------------------------

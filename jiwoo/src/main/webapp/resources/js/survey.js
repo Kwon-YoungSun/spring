@@ -32,7 +32,7 @@ $(document).ready(function(){
 		$('#frm').submit();
 	});
 
-/**/
+/* 설문결과 페이지 이벤트 처리 */
 	$('#sibtn').click(function(){
 		$(location).attr('href', '/cls/survey/surveyInfo.cls');
 	});

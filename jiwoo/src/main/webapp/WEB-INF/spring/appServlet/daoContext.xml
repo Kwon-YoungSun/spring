@@ -11,5 +11,8 @@
 	<!-- root-context를 복사해서 만듦 -->
 	<!-- MemberDao라는 자바 클래스를 객체로 만들어 놓는 태그임 -->
 	<bean id="mDao" class="com.increpas.cls.dao.MemberDao" />
+	<bean id="gDao" class="com.increpas.cls.dao.GBoardDao" />
+	<bean id="sDao" class="com.increpas.cls.dao.SurveyDao" />
+	<bean id="rDao" class="com.increpas.cls.dao.ReBoardDao" />
 	
 </beans>

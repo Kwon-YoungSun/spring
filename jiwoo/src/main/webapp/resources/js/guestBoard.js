@@ -26,16 +26,15 @@ $(document).ready(function(){
 			break;
 		case 'wbtn':
 			// 글등록버튼
-			$('#gfrm').attr('method', 'POST');
-			$('#gfrm').attr('action', '/cls/guestBoard/gBoardWrite.cls');
+			$('#frm').attr('method', 'POST');
+			$('#frm').attr('action', '/cls/guestBoard/gBoardWrite.cls');
 			// 입력데이터 읽어오고
 			var txt = $('#body').val();
 			if(!txt){
 				$('#body').focus();
 				return;
 			}
-			
-			$('#gfrm').submit();
+			$('#frm').submit();
 			return;
 			break;
 		}
@@ -46,7 +45,7 @@ $(document).ready(function(){
 	$('.pagebtn').click(function(){
 		var str = $(this).text();
 		var pcode = str.charCodeAt(str);
-		
+	
 		var sPage = '';
 		
 		if(pcode == 171){
@@ -65,6 +64,7 @@ $(document).ready(function(){
 		// 2. POST 방식 전송
 		// 파라미터 셋팅 부터 하고
 		$('#nowPage').val(sPage);
+//		alert($('#nowPage').val());
 		$('#gfrm').submit();
 	});
 });

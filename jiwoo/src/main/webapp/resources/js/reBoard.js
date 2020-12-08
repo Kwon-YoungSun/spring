@@ -51,16 +51,19 @@ $(document).ready(function(){
 		$('#wmodal').css('display', 'none');
 	});
 	
+	// 원글 쓰기
 	$('#wbtn').click(function(){
 		$('#body').val('');
+		$('#mtitle').html('<b>글 작 성</b>');
 		$('#wrbtn').html('글등록');
 		$('#wmodal').css('display', 'block');
 	});
-	
+	// 리셋 버튼
 	$('#rbtn').click(function(){
 		$('#body').val('');
 	});
-	// 글쓰기 버튼 이벤트 처리	
+	
+	// 글쓰기 버튼(모달창) 이벤트 처리	
 	$('#wrbtn').click(function(){
 		var str = $(this).text();
 		// 수정인지 등록인지 구분해주고
@@ -70,6 +73,7 @@ $(document).ready(function(){
 		
 		// 새로운 글을 쓰는 상황이면
 		if(str != 'edit'){
+			$('#tno').val(0);
 			if(!txt){
 				alert('메세지를 입력하세요!');
 				return;
@@ -77,6 +81,8 @@ $(document).ready(function(){
 		} else { // 글을 수정하는 상황이면
 			url = '/cls/reBoard/reBoardEditProc.cls';	
 		}
+		
+		alert($('#body').val());
 		$('#frm').attr('method', 'POST');
 		$('#frm').attr('action', url);
 		$('#frm').submit();
@@ -89,19 +95,20 @@ $(document).ready(function(){
 		var tno = str.substring(1);
 		
 		$('#dbno').val(tno);
-		
+		$('#frm1').attr('action', '/cls/reBoard/reBoardDelProc.cls');
 		$('#frm1').submit();
 	});
 	
 	// 게시글 수정 이벤트 처리
 	$('.ebtn').click(function(){
-		/*// 버튼 내용 변경
+		// 버튼 내용 변경
 		
 		// 모달 창을 이용해서 처리하는 방법
 		$('#wrbtn').html('edit');
-		var tno = $(this).attr('id').substring(1);
+		$('#mtitle').html('<b>글 수 정</b>');
 		
 		// 수정할 글번호 기억시켜놓고
+		var tno = $(this).attr('id').substring(1);
 		$('#tno').val(tno);
 		
 		// 수정할 내용 읽어오고
@@ -110,7 +117,9 @@ $(document).ready(function(){
 		// 내용 입력태그에 입력하고
 		$('#body').val(tbody);
 		$('#wmodal').css('display', 'block');
-		*/
+		
+		
+		/*
 		// 새로운 뷰를 요청해서 처리하는 방법
 		// 데이터 입력태그에 입력하고
 		var tno = $(this).attr('id').substring(1);
@@ -121,6 +130,7 @@ $(document).ready(function(){
 		$('#frm').attr('method', 'POST');
 		$('#frm').attr('action', '/cls/reBoard/reBoardEditView.cls');
 		$('#frm').submit();
+		*/
 	});
 	
 	// 게시글 답글 이벤트 처리

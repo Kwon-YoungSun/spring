@@ -12,9 +12,11 @@ $(document).ready(function(){
 	
 	$('.namelist').click(function(){
 		var sno = $(this).attr('id');
-
+		$('#infobox').stop().slideUp(300);
+		removeInfo();
 //		alert(sno);
-		
+		$('#outB').css('visibility', 'hidden');
+		$('#editB').css('visibility', 'hidden');
 		$.ajax({
 			url: '/cls/member/memberInfoAjax.cls',
 			type: 'POST',
@@ -23,8 +25,7 @@ $(document).ready(function(){
 				mno: sno
 			},
 			success: function(obj){
-				$('#infobox').stop().slideUp(300);
-				removeInfo();
+				var sid = $('#sid').val();
 				$('#avtimg').attr('src', '/cls/img/avatar/' + obj.avatar);
 				$('#no').text(obj.mno);
 				$('#id').text(obj.id);
@@ -39,6 +40,11 @@ $(document).ready(function(){
 				}
 				$('#gen').text(sgen);
 				$('#jdate').text(obj.sdate);
+				// 회원 아이디와 같은 정보일 경우에만 버튼이 보여지도록 한다
+				if(sid == obj.id){
+					$('#outB').css('visibility', 'visible');
+					$('#editB').css('visibility', 'visible');
+				}
 				$('#infobox').stop().slideDown(300);
 			},
 			error: function(){

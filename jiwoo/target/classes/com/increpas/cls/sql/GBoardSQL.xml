@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="gSQL">
+	<select id="getList" resultType="gVO" parameterType="gVO">
+		SELECT
+			*
+		FROM
+			(
+				SELECT
+					ROWNUM rno, gg.*
+				FROM
+					(
+						SELECT
+							gno, id, body, wdate, wdate AS wtime, afile AS avatar, cnt
+						FROM
+							guestboard, member, avatar,
+							(
+								SELECT
+									COUNT(*) cnt
+								FROM
+									guestboard g, member m
+								WHERE
+									g_mno = mno
+								<if test="id neq null">
+									AND m.id = #{id}
+								</if>
+							)
+						WHERE
+							g_mno = mno
+							AND avt = ano
+							AND guestboard.isshow = 'Y'
+							AND member.isshow = 'Y'
+						ORDER BY
+							wdate DESC
+					) gg
+				)
+		WHERE
+			rno BETWEEN #{page.startCont} AND #{page.endCont}
+	</select>
+	
+	<select id="getTotal" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			guestboard
+		WHERE
+			isshow = 'Y'
+	</select>
+	
+	<select id="getAvatar" resultType="string" parameterType="string">
+		SELECT
+			afile avatar
+		FROM
+			member, avatar
+		WHERE
+			avt = ano
+			AND id = #{id}
+	</select>
+	
+	<insert id="gBoardWrite" parameterType="gVO">
+		<selectKey keyProperty="gno" resultType="int" order="BEFORE">
+			SELECT
+				NVL(MAX(gno) + 1, 1001)
+			FROM
+				guestboard
+		</selectKey>
+		INSERT INTO
+		    guestboard(gno, g_mno, body)
+		VALUES(
+		     #{gno}, 
+		     (SELECT mno FROM member WHERE id = #{id} AND isshow = 'Y'), 
+		     #{body}
+		)
+	</insert>
+</mapper>	

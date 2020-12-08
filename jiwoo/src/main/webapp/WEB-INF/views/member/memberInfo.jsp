@@ -73,6 +73,8 @@
 			
 			<!-- 정보 수정 태그 -->
 			<form class="w3-col w3-border-top" id="frm" name="frm" style="display: none; margin-top: 25px;">
+				<input type="hidden" name="id" value="${ID}">
+				
 				<div class="w3-row w3-margin-top">
 					<div class="w3-button w3-right w3-blue w3-hover-aqua" id="ebtn">수정</div>
 				</div>
@@ -106,6 +108,31 @@
 			</form>
 			
 		</div>
+		
+		<!-- 메세지 확인 모달 -->
+		<c:if test="${not empty MSG}">
+		<div id="id01" class="w3-modal" style="display: block;">
+		    <div class="w3-modal-content">
+		   <c:if test="${MSG ne '수정에 실패했습니다.' }">
+		      <header class="w3-container w3-teal">
+		        <span onclick="document.getElementById('id01').style.display='none'" 
+		        class="w3-button w3-display-topright">&times;</span>
+		        <h2>Modal Header</h2>
+		      </header>
+		   </c:if>
+		   <c:if test="${MSG eq '수정에 실패했습니다.' }">
+		      <header class="w3-container w3-red">
+		        <span onclick="document.getElementById('id01').style.display='none'" 
+		        class="w3-button w3-display-topright">&times;</span>
+		        <h2>Modal Header</h2>
+		      </header>
+		   </c:if>
+		      <div class="w3-container w3-margin-top w3-margin-bottom" style="padding-bottom: 16px;">
+		        <h4 class="w3-center w3-text-grey w3-margin-top w3-margin-bottom">${MSG}</h4>
+		      </div>
+		    </div>
+		</div>
+		</c:if>
 	</div>
 </body>
 </html>
