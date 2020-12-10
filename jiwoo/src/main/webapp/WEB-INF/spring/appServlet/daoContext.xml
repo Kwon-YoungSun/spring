@@ -13,6 +13,7 @@
 	<bean id="mDao" class="com.increpas.cls.dao.MemberDao" />
 	<bean id="gDao" class="com.increpas.cls.dao.GBoardDao" />
 	<bean id="sDao" class="com.increpas.cls.dao.SurveyDao" />
+	<bean id="bDao" class="com.increpas.cls.dao.BoardDao" />
 	<bean id="rDao" class="com.increpas.cls.dao.ReBoardDao" />
 	
 </beans>

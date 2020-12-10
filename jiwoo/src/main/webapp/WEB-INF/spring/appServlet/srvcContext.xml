@@ -11,5 +11,6 @@
 	<!-- root-context를 복사해서 만듦 -->
 	
 	<bean id="gService" class="com.increpas.cls.service.GBoardService" />
+	<bean id="bSrvc" class="com.increpas.cls.service.BoardService" />
 	
 </beans>

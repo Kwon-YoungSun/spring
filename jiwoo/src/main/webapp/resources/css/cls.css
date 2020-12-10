@@ -108,8 +108,16 @@
 	padding-left: 50px;
 }
 
+.pd5 {
+	padding: 5px;
+}
+
 .pd10 {
 	padding: 10px;
+}
+
+.pd20 {
+	padding: 20px;
 }
 
 .pdh1 {
@@ -122,6 +130,14 @@
 
 .pdh10 {
 	padding: 0px 5px;
+}
+
+.pdt5 {
+	padding-top: 5px;
+}
+
+.pdt10 {
+	padding-top: 10px;
 }
 
 .clslbl {
@@ -146,23 +162,57 @@
 .imgbox3 {
 	display: inline-block;
 	width: 125px;
-	height: 135px;
+	height: 155px;
 }
 
 .imgboxfr {
 	display: inline-block;
 	width: 145px;
-	height: 195px;
+	height: 170px;
 	padding: 10px;
+}
+
+.imgboxfr2 {
+	display: inline-block;
+	width: 145px;
+	height: auto;
+	padding: 10px;
+}
+
+.imgfr2 {
+	width: 125px;
+	height: 125px;
 	overflow: hidden;
 }
 .imgsrc {
 	width: 100px;
 	height: 100px;
 }
-.imgsrc2 {
+
+.imgsrc2w {
 	width: 125px;
 	height: auto;
+}
+
+.imgsrc2h {
+	height: 125px;
+	width: auto;
+}
+
+.imgsrc3w {
+	width: 228px;
+	height: auto;
+}
+
+.imgsrc3h {
+	height: 228px;
+	width: auto;
+}
+
+
+.imgname {
+	height: 10px;
+	width: 100%;
 }
 
 .mt0 {
@@ -287,4 +337,70 @@ span#wbtn {
 
 .dfr {
 	height: 30px;
+}
+
+.addFr {
+	width: 70px;
+	height: 70px;
+	overflow: hidden;
+}
+
+.addImgW {
+	width: 60px;
+	height: auto;
+}
+
+.addImgH {
+	height: 60px;
+	width: auto;
+}
+
+.addImgW2 {
+	width: 125px;
+	height: auto;
+}
+
+.addImgH2 {
+	height: 125px;
+	width: auto;
+}
+
+.addImgW3 {
+	width: 228px;
+	height: auto;
+}
+
+.addImgH3 {
+	height: 228px;
+	width: auto;
+}
+
+.oriImg {
+	width: 50px;
+	height: auto;
+}
+.margin-h5 {
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+.headH {
+	height: 45px;
+}
+
+#closeBtn {
+	width: 64px;
+	height: 64px;
+	font-size: 40px;
+	line-height: 120%;
+}
+
+.delImgBox {
+	width: 250px;
+	height: 250px;
+}
+
+.imgDescBox {
+	width: 270px;
+	height: 250px;
 }

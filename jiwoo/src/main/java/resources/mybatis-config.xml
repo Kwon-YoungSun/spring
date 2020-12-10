@@ -35,6 +35,8 @@
 		<typeAlias alias="gVO" type="com.increpas.cls.vo.GBoardVO" />
 		<typeAlias alias="sVO" type="com.increpas.cls.vo.SurveyVO" />
 		<typeAlias alias="rVO" type="com.increpas.cls.vo.ReBoardVO" />
+		<typeAlias alias="bVO" type="com.increpas.cls.vo.BoardVO" />
+		<typeAlias alias="fVO" type="com.increpas.cls.vo.FileVO" />
 
 		<!-- String Class 타입을 사용할 경우에는 
 		<typeAlias alias="str" type="java.lang.String" />
@@ -97,5 +99,6 @@
 		<mapper resource="com/increpas/cls/sql/GBoardSQL.xml" />
 		<mapper resource="com/increpas/cls/sql/SurveySQL.xml" />
 		<mapper resource="com/increpas/cls/sql/ReboardSQL.xml" />
+		<mapper resource="com/increpas/cls/sql/BoardSQL.xml" />
 	</mappers>
 </configuration>

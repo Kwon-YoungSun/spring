@@ -2,7 +2,7 @@ package com.increpas.cls.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
+import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +33,7 @@ public class Member {
 		return "member/Login";
 	}
 	
+	private static final Logger logger = LoggerFactory.getLogger(Member.class);
 	
 	@RequestMapping(path="/loginProc.cls", params= {"id", "pw"}, method=RequestMethod.POST)
 	public ModelAndView loginProc(ModelAndView mv, RedirectView rd, HttpSession session, MemberVO mVO) {
@@ -43,6 +44,7 @@ public class Member {
 			rd.setUrl("/cls/member/login.cls");
 		} else {
 			session.setAttribute("SID", mVO.getId());
+			logger.info(mVO.getId() + " ] - ***** Login *****");
 			rd.setUrl("/cls/main.cls");
 		}
 		mv.setView(rd);
@@ -57,6 +59,7 @@ public class Member {
 			mv.setView(rd);
 		} else {
 			session.removeAttribute("SID");
+			logger.info(sid + " ] - ##### Logout #####");
 			rd.setUrl("/cls/member/login.cls");
 			mv.setView(rd);
 		}

@@ -59,12 +59,23 @@
 	</insert>
 	
 	<update id="delReboard" parameterType="rVO">
-		UPDATE 
-			reboard 
-		SET 
-			isshow = 'N' 
-		WHERE 
-			bno = #{bno}
+		UPDATE
+			reboard
+		SET
+			isshow = 'N'
+		WHERE
+			bno IN (
+							SELECT
+								bno
+							FROM
+								reboard
+							WHERE
+								CONNECT_BY_ROOT bno = #{bno}
+							START WITH
+								bno = #{bno}
+							CONNECT BY
+								PRIOR bno = upno
+						)
 	</update>
 	
 	<insert id="addReboard" parameterType="rVO">
