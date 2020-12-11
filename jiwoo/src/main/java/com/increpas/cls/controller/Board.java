@@ -1,8 +1,10 @@
 package com.increpas.cls.controller;
 
+import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.increpas.cls.dao.*;
@@ -21,6 +23,7 @@ public class Board {
 	BoardDao bDao;
 	@Autowired
 	BoardService bSrvc;
+	
 	
 	// 게시글 리스트 폼 요청 처리함수
 	@RequestMapping("/boardList.cls")
@@ -56,25 +59,15 @@ public class Board {
 	}
 	
 	@RequestMapping("/boardWrite.cls")
-	public ModelAndView boardWrite(ModelAndView mv, HttpSession session) {
+	public ModelAndView boardWrite(ModelAndView mv, HttpSession session, PageUtil page) {
 		// 세션 검사
 		String sid = (String) session.getAttribute("SID");
 		if(sid == null) {
 			mv.setViewName("redirect:/member/login.cls");
-			return mv;
+		} else {
+			mv.addObject("PAGE", page);
+			mv.setViewName("board/boardWrite");
 		}
-		mv.setViewName("board/boardWrite");
-		return mv;
-	}
-	
-	@RequestMapping("/redirect.cls")
-	public ModelAndView boardRedirect(ModelAndView mv, int nowPage) {
-		mv.addObject("VIEW", "boardList.cls");
-//		mv.addObject("BNO", bno);
-
-		mv.addObject("NOWPAGE", nowPage);
-		
-		mv.setViewName("board/boardRedirect");
 		return mv;
 	}
 	
@@ -101,21 +94,25 @@ public class Board {
 	// 게시글 등록 요청 처리 함수
 	@RequestMapping("/boardWriteProc.cls")
 	public ModelAndView boardWriteProc(ModelAndView mv, BoardVO bVO, PageUtil page, HttpSession session) {
-		/*
+		
 		if(session.getAttribute("SID") == null) {
 			mv.setViewName("redirect:/member/login.cls");
-		} else {
-			mv.addObject("PAGE", page);
-			mv.addObject("VIEW", "/cls/board");
-			
+			return mv;
+		} 
+		bSrvc.addBoard(mv, bVO, page);
+//		mv.setViewName("redirect:/board/boardList.cls");
+		return mv;
+	}
+	
+	@RequestMapping("/boardEditProc.cls")
+	public ModelAndView boardEditProc(ModelAndView mv, BoardVO bVO, HttpSession session, PageUtil page) {
+		// 세션처리
+		if(session.getAttribute("SID") == null) {
+			mv.setViewName("redirect:/member/login.cls");
+			return mv;
 		}
-		*/
-		/*
-		mv.addObject("NOWPAGE", page.getNowPage());
-		mv.addObject("VIEW", "boardWrite.cls");
-		*/
-		bSrvc.saveProc(bVO.getFile());
-		mv.setViewName("redirect:/board/boardList.cls");
+		bSrvc.editBoard(mv, bVO, page);
+		
 		return mv;
 	}
 }

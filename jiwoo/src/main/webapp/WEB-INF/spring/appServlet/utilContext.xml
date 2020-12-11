@@ -11,5 +11,6 @@
 	<!-- root-context를 복사해서 만듦 -->
 	
 	<bean id="color" class="com.increpas.cls.util.W3Color" />
+	<bean id="fUtil" class="com.increpas.cls.util.FileUtil" />
 	
 </beans>

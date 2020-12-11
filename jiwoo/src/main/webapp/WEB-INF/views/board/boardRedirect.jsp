@@ -16,9 +16,9 @@
 </script>
 </head>
 <body>
-	<form method="POST" action="/cls/board/${VIEW}" id="frm">
+	<form method="POST" action="${VIEW}" id="frm">
 		<input type="hidden" name="bno" value="${BNO}">
-		<input type="hidden" name="nowPage" value="${NOWPAGE}">
+		<input type="hidden" name="nowPage" value="${PAGE.nowPage}">
 	</form>
 </body>
 </html>

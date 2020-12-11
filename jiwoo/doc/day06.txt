@@ -104,7 +104,7 @@
 							open="(" close=")" separator=",">#{data}
 					</foreach>
 	5. set
-		==> update 명령의 set 절을 만들어 태그
+		==> update 명령의 set 절을 만들어 주는 태그
 		
 		형식 ]
 			<set>

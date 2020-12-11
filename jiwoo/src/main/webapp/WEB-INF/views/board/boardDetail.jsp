@@ -32,12 +32,12 @@
 					<label class="w3-col m2 w3-right-align w3-label">File</label>
 					<div class="w3-col m9 w3-center w3-margin-bottom pdl20 filefr">
 	<c:forEach var="fdata" items="${LIST}">
-						<div class="imgboxfr w3-border">
+						<div class="imgboxfr w3-border w3-center">
 							<div class="w3-margin-bottom imgbox3">
-								<a href="/cls/img/upload/${fdata.savename}">
-									<img src="/cls/img/upload/${fdata.savename}" class="imgsrc2">
+								<a href="/cls/img/upload/${fdata.savename}" class="inblock w3-display-container imgfr2">
+									<img src="/cls/img/upload/${fdata.savename}" class="w3-display-middle imgsrc2" onLoad="resize(this, 'addImgW2', 'addImgH2')">
 								</a>
-								<span class="w3-col w3-margin-bottom w3-text-grey"><small>${fdata.oriname}</small></span>
+								<span class="inblock w3-col w3-margin-bottom w3-text-grey imgname"><small>${fdata.oriname}</small></span>
 							</div>
 						</div>
 	</c:forEach>

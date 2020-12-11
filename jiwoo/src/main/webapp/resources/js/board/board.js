@@ -66,7 +66,7 @@ $(document).ready(function(){
 	});
 	
 	$('#cbtn').click(function(){
-		$('#frm').attr('action', '/cls/board/redirect.cls');
+		$('#frm').attr('action', '/cls/board/boardList.cls');
 		$('#frm').submit();
 	});
 	// 문서가 완성이 되면 태그에 입력된 값을 기억해 놓는다.
@@ -86,8 +86,48 @@ $(document).ready(function(){
 		if(tBody == body){
 			$('#body').prop('readonly', true);
 		}
-		
+		// 파일 선택이 안된 태그 비활성 처리
+		$('.upfile').last().prop('disabled', true);
 		$('#efrm').submit();
+	});
+	
+	var i = 0;
+	
+	
+	$('.editFileB').hover(
+	  function() {
+		$(this).find('.deletePan').stop().fadeIn();
+	  }, function() {
+		$(this).find('.deletePan').stop().fadeOut();
+	  }
+	);
+
+	$('.editFileB').click(function(){
+		// 파일 삭제 하고 싶은 경우
+		if($(this).children().first().hasClass('deletePan')){
+			// 1. 딜리트패널 활성화		
+			$(this).find('.deletePan').stop().fadeIn();
+			$(this).find('.deletePan').removeClass('deletePan');
+			// 2. type이 hidden 이고 name이 'delfile' 인 input 태그를 만든다.
+			let delfile = $(document.createElement('input'));
+			$(delfile).attr('type', 'hidden');
+			$(delfile).attr('name', 'delfile');
+			// 3. 삭제 취소에 대비해 아이디를 'df + 파일번호'로 설정한다.
+			let id = $(this).children().eq(1).find('a').attr('id');
+			$(delfile).attr('id', 'df' + id);
+			$(delfile).val(id);
+//			alert($(delfile).val());
+			// 4. 폼 태그 안에 삽입한다.
+			$('#efrm').prepend(delfile);
+		} else {
+			// 파일 삭제 취소하고 싶은 경우
+			// 1. 딜리트패널 비활성화
+			$(this).children().first().stop().fadeOut();
+			$(this).children().first().addClass('deletePan');
+			// 2. 해당 파일의 파일번호에 해당하는 input 태그를 삭제한다.
+			let id = $(this).children().eq(1).find('a').attr('id');
+			$('#df' + id).remove();
+		}
 	});
 	
 	var ino = 0;

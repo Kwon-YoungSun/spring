@@ -1,14 +1,12 @@
 package com.increpas.cls.vo;
 
 import java.util.*;
-
+import java.util.Date;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.text.*;
 import java.sql.*;
-import java.sql.Date;
-import java.sql.Time;
-import com.increpas.cls.vo.*;
+
 public class BoardVO {
 	/*
 	 	bno		: board number
@@ -28,6 +26,7 @@ public class BoardVO {
 	private ArrayList<FileVO> list;
 	
 	private MultipartFile[] file;
+	private int[] delfile;
 	/*
 	 	업로드된 파일을 기억할 변수는
 	 		MultipartFile
@@ -39,6 +38,12 @@ public class BoardVO {
 	
 	public MultipartFile[] getFile() {
 		return file;
+	}
+	public int[] getDelfile() {
+		return delfile;
+	}
+	public void setDelfile(int[] delfile) {
+		this.delfile = delfile;
 	}
 	public void setFile(MultipartFile[] file) {
 		this.file = file;
@@ -109,10 +114,16 @@ public class BoardVO {
 	public void setSdate(String sdate) {
 		this.sdate = sdate;
 	}
+	/*
 	public void setSdate() {
 		SimpleDateFormat form1 = new SimpleDateFormat("yyyy/MM/dd");
 		SimpleDateFormat form2 = new SimpleDateFormat("HH:mm");
 		sdate = form1.format(wdate) + " " + form2.format(wtime);
+	}
+	*/
+	public void setSdate() {
+		SimpleDateFormat form1 = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+		sdate = form1.format(wdate);
 	}
 	public Date getWdate() {
 		return wdate;

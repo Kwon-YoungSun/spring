@@ -44,8 +44,7 @@ public class BoardDao {
 	
 	// 게시글 모두 입력 전담 처리 함수
 	@Transactional
-	public int addAll(BoardVO bVO) {
-		int cnt = 0;
+	public void addAll(BoardVO bVO) {
 		// 게시글 등록
 		addBoard(bVO);
 		int bno = bVO.getBno();
@@ -54,6 +53,21 @@ public class BoardDao {
 		for(FileVO fVO : list) {
 			fVO.setBno(bVO.getBno());
 			addFile(fVO);
+		}
+		return;
+	}
+	
+	// 게시글 수정 전담 처리 함수
+	public int boardEdit(BoardVO bVO) {
+		return sqlSession.update("bSQL.boardEdit", bVO);
+	}
+	
+	// 첨부파일 삭제 전담 처리 함수
+	@Transactional
+	public int delFile(int[] delfile) {
+		int cnt = 0;
+		for(int fno : delfile) {
+			cnt += sqlSession.update("bSQL.delFile", fno);
 		}
 		return cnt;
 	}
