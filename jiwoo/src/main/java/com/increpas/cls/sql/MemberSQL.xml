@@ -3,17 +3,31 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mSQL">
+
+	<sql id="selCnt">
+		SELECT
+			COUNT(*) cnt
+		FROM
+			member
+		WHERE
+			id = 
+	</sql>
+	
 	<select id="idCount" resultType="int" parameterType="string">
+		<!-- 
 		SELECT
 			COUNT(*) cnt
 		FROM
 			member
 		WHERE
 			id = #{id}
+		 -->
+		 <include refid="selCnt" /> #{id}
 	</select>
 	
 	<!-- xml로 파라미터를 두개 이상 받는 것은 불가능하다. 따라서 VO 클래스로 받는다. -->
 	<select id="login" resultType="int" parameterType="mVO">
+		<!-- 
 		SELECT
 			count(*) cnt
 		FROM
@@ -22,6 +36,10 @@
 			id = #{id}
 			AND pw = #{pw}
 			AND isshow = 'Y'
+		 -->
+		 <include refid="selCnt" /> #{id}
+		 	AND pw = #{pw}
+		 	AND isshow = 'Y'
 	</select>
 	
 	<select id="getInfo" resultType="mVO" parameterType="string">

@@ -44,7 +44,7 @@ public class Member {
 			rd.setUrl("/cls/member/login.cls");
 		} else {
 			session.setAttribute("SID", mVO.getId());
-			logger.info(mVO.getId() + " ] - ***** Login *****");
+//			logger.info(mVO.getId() + " ] - ***** Login *****");
 			rd.setUrl("/cls/main.cls");
 		}
 		mv.setView(rd);
@@ -53,16 +53,18 @@ public class Member {
 	
 	@RequestMapping("/logout.cls")
 	public ModelAndView logoutProc(HttpSession session, RedirectView rd, ModelAndView mv) {
-		String sid = (String) session.getAttribute("SID");
+//		String sid = (String) session.getAttribute("SID");
+		/*
 		if(sid == null) {
 			rd.setUrl("/cls/main.cls");
 			mv.setView(rd);
 		} else {
-			session.removeAttribute("SID");
-			logger.info(sid + " ] - ##### Logout #####");
-			rd.setUrl("/cls/member/login.cls");
-			mv.setView(rd);
 		}
+		 */
+		session.removeAttribute("SID");
+//		logger.info(sid + " ] - ##### Logout #####");
+		rd.setUrl("/cls/member/login.cls");
+		mv.setView(rd);
 		
 		return mv;
 	}
@@ -91,14 +93,14 @@ public class Member {
 			이 함수내에서 처리할 내용을 로그인이 되어있는 회원의 경우는 리다이렉트로 main.cls 로 보내야 한다.
 		 */
 		String sid = (String) session.getAttribute("SID");
-		/*
+		
 		if(sid != null || sid.length() != 0 ) {
 			rd.setUrl("/cls/main.cls");
 			mv.setView(rd); // redirect로 뷰를 호출하는 경우
 		} else {
 			mv.setViewName("member/join"); // forward로 뷰 부르는 경우
 		}
-		*/
+		
 		if(sid == null || sid.length() == 0) {
 			mv.setViewName("member/join");
 			// 데이터 만들고

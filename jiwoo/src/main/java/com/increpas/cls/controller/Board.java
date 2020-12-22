@@ -61,18 +61,19 @@ public class Board {
 	@RequestMapping("/boardWrite.cls")
 	public ModelAndView boardWrite(ModelAndView mv, HttpSession session, PageUtil page) {
 		// 세션 검사
+		/*
 		String sid = (String) session.getAttribute("SID");
 		if(sid == null) {
 			mv.setViewName("redirect:/member/login.cls");
-		} else {
+		}*/ 
 			mv.addObject("PAGE", page);
 			mv.setViewName("board/boardWrite");
-		}
 		return mv;
 	}
 	
 	@RequestMapping("/boardEdit.cls")
-	public ModelAndView boardEdit(ModelAndView mv, int bno, HttpSession session) {
+	public ModelAndView boardEdit(ModelAndView mv, // 실행결과 데이터와 뷰를 모두 필요로 하기 때문에 사용
+			int bno, HttpSession session) {
 		// 세션 검사
 		String sid = (String) session.getAttribute("SID");
 		if(sid == null) {

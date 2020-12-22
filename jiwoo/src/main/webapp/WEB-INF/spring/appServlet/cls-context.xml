@@ -29,6 +29,7 @@
 	</beans:bean>
 	
 	<!-- 빈처리 설정파일 가져오기 -->
+	<beans:import resource="interceptorContext.xml" />
 	<beans:import resource="daoContext.xml" />
 	<beans:import resource="utilContext.xml" />
 	<beans:import resource="srvcContext.xml" />

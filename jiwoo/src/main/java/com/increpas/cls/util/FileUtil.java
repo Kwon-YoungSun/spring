@@ -74,7 +74,7 @@ public class FileUtil {
 				// 파일 원본이름을 알아낸다.
 				String oriname = file[i].getOriginalFilename();
 				// 만약 파일이 업로드 되지 않는 작업이라면 이 파일은 지나가야 한다.
-				if(oriname == null) {
+				if(oriname == null || oriname.length() == 0) { // oriname = "";
 					continue;
 				}
 				

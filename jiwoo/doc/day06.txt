@@ -60,7 +60,7 @@
 				
 					update
 						member
-					<trim prefix="SET" suffixOverrides="">내용</trim>
+					<trim prefix="SET" suffixOverrides=",">내용</trim>
 						<if test="mail neq NULL">mail = #{mail}, </if>
 						<if test="avt neq 0">mail = #{avt}, </if>
 					</trim>
