@@ -332,5 +332,15 @@ public class Member {
 		return mVO;
 	}
 	
-	
+	@RequestMapping("/chatting.cls")
+	public ModelAndView chatting(ModelAndView mv, HttpSession session) {
+		String sid = (String) session.getAttribute("SID");
+		if(sid == null) {
+			mv.setViewName("redirect: /member/login.cls");
+			return mv;
+		}
+		
+		mv.setViewName("member/chatting");
+		return mv;
+	}
 }

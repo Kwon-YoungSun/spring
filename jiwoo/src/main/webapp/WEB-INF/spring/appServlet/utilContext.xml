@@ -12,5 +12,5 @@
 	
 	<bean id="color" class="com.increpas.cls.util.W3Color" />
 	<bean id="fUtil" class="com.increpas.cls.util.FileUtil" />
-	
+	<bean id="chatHandler" class="com.increpas.cls.util.ChatHandler" />
 </beans>

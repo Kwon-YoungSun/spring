@@ -67,6 +67,9 @@
 						<div class="w3-col m3 pdh10">			
 							<h5 class="w3-col w3-button w3-teal w3-hover-aqua" id="membListbtn">회원목록</h5>
 						</div>	
+						<div class="w3-col m3 pdh10">			
+							<h5 class="w3-col w3-button w3-deep-purple w3-hover-purple" id="chatBtn">채팅</h5>
+						</div>	
 					</div>
 				</div>
 			</c:if>

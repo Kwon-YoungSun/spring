@@ -40,4 +40,7 @@ $(document).ready(function(){
 	$('#membListbtn').click(function(){
 		$(location).attr('href', '/cls/member/nameList.cls');
 	});
+	$('#chatBtn').click(function(){
+		$(location).attr('href', '/cls/member/chatting.cls');
+	});
 });
